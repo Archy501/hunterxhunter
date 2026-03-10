@@ -3,13 +3,13 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Відправити геолокацію</title>
+<title>Геолокація групи</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#f2f6fb;
+background:#f4f7fb;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -20,7 +20,7 @@ height:100vh;
 background:white;
 padding:40px;
 width:380px;
-border-radius:14px;
+border-radius:12px;
 box-shadow:0 10px 30px rgba(0,0,0,0.15);
 text-align:center;
 }
@@ -44,12 +44,6 @@ button:hover{
 background:#1d63d6;
 }
 
-.status{
-margin-top:20px;
-font-size:14px;
-color:#555;
-}
-
 </style>
 
 </head>
@@ -61,11 +55,11 @@ color:#555;
 <h2>Відправити геолокацію</h2>
 
 <form id="locationForm"
-action="https://docs.google.com/forms/d/e/FORM_ID/formResponse"
+action="https://docs.google.com/forms/d/e/1GZoaA9M2p_AzgLPiYY9MKexerR5buVu__7pn2bZQh70/formResponse"
 method="POST"
 target="hiddenFrame">
 
-<select name="entry.NAME_ID" id="name">
+<select name="entry.498498954" id="name">
 
 <option value="">Оберіть ПІБ</option>
 
@@ -127,9 +121,9 @@ target="hiddenFrame">
 
 </select>
 
-<input type="hidden" name="entry.LAT_ID" id="lat">
-<input type="hidden" name="entry.LON_ID" id="lon">
-<input type="hidden" name="entry.TIME_ID" id="time">
+<input type="hidden" name="entry.744814946" id="lat">
+<input type="hidden" name="entry.658629472" id="lon">
+<input type="hidden" name="entry.1024492850" id="time">
 
 <button type="button" onclick="sendLocation()">
 📍 Відправити геолокацію
@@ -139,7 +133,7 @@ target="hiddenFrame">
 
 <iframe name="hiddenFrame" style="display:none;"></iframe>
 
-<div class="status" id="status"></div>
+<div id="status"></div>
 
 </div>
 
@@ -153,13 +147,6 @@ if(name==""){
 alert("Оберіть ПІБ")
 return
 }
-
-if(!navigator.geolocation){
-alert("Геолокація не підтримується")
-return
-}
-
-document.getElementById("status").innerHTML="Отримую GPS..."
 
 navigator.geolocation.getCurrentPosition(function(pos){
 

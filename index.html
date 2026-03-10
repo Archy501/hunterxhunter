@@ -23,6 +23,7 @@ width:360px;
 border-radius:12px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 text-align:center;
+position:relative;
 }
 
 select,button{
@@ -38,26 +39,35 @@ background:#2f7cff;
 color:white;
 border:none;
 cursor:pointer;
+transition:0.2s;
 }
 
 button:hover{
 background:#1d63d6;
 }
 
+button:disabled{
+background:#9aa6c3;
+cursor:not-allowed;
+}
+
 #toast{
-visibility:hidden;
+position:absolute;
+top:-10px;
+left:50%;
+transform:translate(-50%,-100%);
 background:#28a745;
 color:white;
-padding:14px;
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
+padding:10px 18px;
 border-radius:8px;
+opacity:0;
+transition:0.3s;
+font-size:14px;
 }
 
 #toast.show{
-visibility:visible;
+opacity:1;
+transform:translate(-50%,-120%);
 }
 
 </style>
@@ -67,12 +77,13 @@ visibility:visible;
 
 <div class="card">
 
+<div id="toast">Геолокація відправлена ✔</div>
+
 <h2>Відправити геолокацію</h2>
 
 <select id="name">
 
 <option value="">Оберіть ПІБ</option>
-
 
 <option>ПЕТРАШИШЕН Богдан Євгенійович</option>
 <option>ОГРЕБЧУК Сергій Георгійович</option>
@@ -126,19 +137,18 @@ visibility:visible;
 
 </select>
 
-<button onclick="sendLocation()">
+<button id="sendBtn" onclick="sendLocation()">
 📍 Відправити геолокацію
 </button>
 
 </div>
-
-<div id="toast">Місцезнаходження відправлено</div>
 
 <script>
 
 function sendLocation(){
 
 let name=document.getElementById("name").value
+let btn=document.getElementById("sendBtn")
 
 if(name==""){
 alert("Оберіть ПІБ")
@@ -159,14 +169,21 @@ data.append("entry.658629472",lon)
 data.append("entry.1024492850",time)
 
 fetch("https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse",{
-
 method:"POST",
 mode:"no-cors",
 body:data
-
 })
 
 showToast()
+
+btn.innerText="Дякую!"
+btn.disabled=true
+
+// розблокувати через 30 сек
+setTimeout(function(){
+btn.innerText="📍 Відправити геолокацію"
+btn.disabled=false
+},30000)
 
 })
 
@@ -176,10 +193,10 @@ function showToast(){
 
 let toast=document.getElementById("toast")
 
-toast.className="show"
+toast.classList.add("show")
 
 setTimeout(function(){
-toast.className=""
+toast.classList.remove("show")
 },3000)
 
 }
@@ -188,4 +205,3 @@ toast.className=""
 
 </body>
 </html>
-

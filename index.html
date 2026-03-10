@@ -39,11 +39,6 @@ background:#2f7cff;
 color:white;
 border:none;
 cursor:pointer;
-transition:0.2s;
-}
-
-button:hover{
-background:#1d63d6;
 }
 
 button:disabled{
@@ -53,21 +48,14 @@ cursor:not-allowed;
 
 #toast{
 position:absolute;
-top:-10px;
+top:-15px;
 left:50%;
-transform:translate(-50%,-100%);
+transform:translateX(-50%);
 background:#28a745;
 color:white;
-padding:10px 18px;
+padding:10px 16px;
 border-radius:8px;
-opacity:0;
-transition:0.3s;
-font-size:14px;
-}
-
-#toast.show{
-opacity:1;
-transform:translate(-50%,-120%);
+display:none;
 }
 
 </style>
@@ -137,9 +125,23 @@ transform:translate(-50%,-120%);
 
 </select>
 
+<form id="form"
+action="https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse"
+method="POST"
+target="hiddenFrame">
+
+<input type="hidden" name="entry.498498954" id="nameField">
+<input type="hidden" name="entry.744814946" id="latField">
+<input type="hidden" name="entry.658629472" id="lonField">
+<input type="hidden" name="entry.1024492850" id="timeField">
+
+</form>
+
 <button id="sendBtn" onclick="sendLocation()">
 📍 Відправити геолокацію
 </button>
+
+<iframe name="hiddenFrame" style="display:none;"></iframe>
 
 </div>
 
@@ -147,56 +149,48 @@ transform:translate(-50%,-120%);
 
 function sendLocation(){
 
-let name=document.getElementById("name").value
-let btn=document.getElementById("sendBtn")
+var name=document.getElementById("name").value
 
-if(name==""){
+if(name===""){
 alert("Оберіть ПІБ")
 return
 }
 
+var btn=document.getElementById("sendBtn")
+
+btn.disabled=true
+btn.innerHTML="Дякую!"
+
 navigator.geolocation.getCurrentPosition(function(pos){
 
-let lat=pos.coords.latitude
-let lon=pos.coords.longitude
-let time=new Date().toLocaleString()
+document.getElementById("nameField").value=name
+document.getElementById("latField").value=pos.coords.latitude
+document.getElementById("lonField").value=pos.coords.longitude
+document.getElementById("timeField").value=new Date().toLocaleString()
 
-let data=new URLSearchParams()
-
-data.append("entry.498498954",name)
-data.append("entry.744814946",lat)
-data.append("entry.658629472",lon)
-data.append("entry.1024492850",time)
-
-fetch("https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse",{
-method:"POST",
-mode:"no-cors",
-body:data
-})
+document.getElementById("form").submit()
 
 showToast()
 
-btn.innerText="Дякую!"
-btn.disabled=true
-
-// розблокувати через 30 сек
-setTimeout(function(){
-btn.innerText="📍 Відправити геолокацію"
-btn.disabled=false
-},30000)
-
 })
+
+setTimeout(function(){
+
+btn.disabled=false
+btn.innerHTML="📍 Відправити геолокацію"
+
+},60000)
 
 }
 
 function showToast(){
 
-let toast=document.getElementById("toast")
+var toast=document.getElementById("toast")
 
-toast.classList.add("show")
+toast.style.display="block"
 
 setTimeout(function(){
-toast.classList.remove("show")
+toast.style.display="none"
 },3000)
 
 }

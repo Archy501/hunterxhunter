@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+
+<meta charset="UTF-8">
+<title>Відправити геолокацію</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f6fb;
+text-align:center;
+padding-top:80px;
+}
+
+.card{
+background:white;
+width:340px;
+margin:auto;
+padding:40px;
+border-radius:14px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h2{
+margin-bottom:20px;
+}
+
+button{
+background:#2f7cff;
+border:none;
+color:white;
+font-size:20px;
+padding:16px 28px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#1e63d6;
+}
+
+.coords{
+margin-top:20px;
+font-size:14px;
+color:#555;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Надіслати геолокацію</h2>
+
+<form id="locationForm"
+action="https://docs.google.com/forms/d/e/FORM_ID/formResponse"
+method="POST"
+target="hiddenFrame">
+
+<input type="hidden" name="entry.111111111" id="lat">
+<input type="hidden" name="entry.222222222" id="lon">
+
+<button type="button" onclick="sendLocation()">
+📍 Відправити моє місцезнаходження
+</button>
+
+</form>
+
+<div class="coords" id="coords"></div>
+
+</div>
+
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
+<script>
+
+function sendLocation(){
+
+if(!navigator.geolocation){
+alert("Геолокація не підтримується");
+return;
+}
+
+navigator.geolocation.getCurrentPosition(function(pos){
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+document.getElementById("lat").value = lat;
+document.getElementById("lon").value = lon;
+
+document.getElementById("coords").innerHTML =
+"Ваші координати: " + lat.toFixed(6) + ", " + lon.toFixed(6);
+
+document.getElementById("locationForm").submit();
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

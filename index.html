@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-
 <meta charset="UTF-8">
 <title>Геолокація групи</title>
 
@@ -9,7 +8,7 @@
 
 body{
 font-family:Arial;
-background:#f2f6fb;
+background:#f3f6fb;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -20,9 +19,9 @@ margin:0;
 .card{
 background:white;
 padding:40px;
-width:380px;
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
+width:360px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
 text-align:center;
 }
 
@@ -47,37 +46,21 @@ background:#1d63d6;
 
 #toast{
 visibility:hidden;
-min-width:260px;
 background:#28a745;
 color:white;
-text-align:center;
-border-radius:8px;
 padding:14px;
 position:fixed;
 bottom:40px;
 left:50%;
 transform:translateX(-50%);
-font-size:16px;
-box-shadow:0 5px 15px rgba(0,0,0,0.25);
+border-radius:8px;
 }
 
 #toast.show{
 visibility:visible;
-animation:fadein 0.4s, fadeout 0.4s 2.6s;
-}
-
-@keyframes fadein{
-from{bottom:20px;opacity:0;}
-to{bottom:40px;opacity:1;}
-}
-
-@keyframes fadeout{
-from{bottom:40px;opacity:1;}
-to{bottom:20px;opacity:0;}
 }
 
 </style>
-
 </head>
 
 <body>
@@ -87,7 +70,7 @@ to{bottom:20px;opacity:0;}
 <h2>Відправити геолокацію</h2>
 
 <form id="locationForm"
-action="https://docs.google.com/forms/d/e/1GZoaA9M2p_AzgLPiYY9MKexerR5buVu__7pn2bZQh70/formResponse"
+action="https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse"
 method="POST"
 target="hiddenFrame">
 
@@ -99,57 +82,6 @@ target="hiddenFrame">
 <option>ПЕТРАШИШЕН Богдан Євгенійович</option>
 <option>ОГРЕБЧУК Сергій Георгійович</option>
 <option>ДМИТРИШИН Орест Володимирович</option>
-<option>ГЛИВКА Андрій Ярославович</option>
-<option>ПОРУТЧИК Дмитро Миколайович</option>
-<option>ЗВОНЕЦЬКИЙ Ілля Іванович</option>
-<option>НІКІТА Андрій Васильович</option>
-<option>ПІТИК Степан Тарасович</option>
-<option>ПЛЕШКО Ілля Миколайович</option>
-<option>КОСТЮК Дмитро Валерійович</option>
-<option>ХУДОЯРОВ Іван Мадіярович</option>
-<option>САВЮК Андрій Іванович</option>
-<option>ДОНСЬКОЙ Андрій Сергійович</option>
-<option>ТКАЧУК Віктор Вікторович</option>
-<option>ЛИПНЮК Валерій Васильович</option>
-<option>НЯГУ Анатолій Іванович</option>
-<option>ЛЯХОМСЬКИЙ Іван Володимирович</option>
-<option>МУНТЯН Степан Васильович</option>
-<option>СЛИВКА Андрій Васильович</option>
-<option>МІСЕВИЧ Ігор Миколайович</option>
-<option>УРСАТІЙ Яким Якимович</option>
-<option>НЕПІТ Микола Петрович</option>
-<option>САКАЛЮК Сергій Васильович</option>
-<option>СИРОТЮК Олексій Миколайович</option>
-<option>МАТВЕЄВ Кирило Іванович</option>
-<option>САВЧУК Ярослав Вікторович</option>
-<option>ЯСИНІВСЬКИЙ Павло Захарович</option>
-<option>МОЙСЮК Дмитро Дмитрович</option>
-<option>ТОМЧУК Павло Павлович</option>
-<option>ГОЛДАЙ Павло Андрійович</option>
-<option>ЧАЛИЙ Василь Романович</option>
-<option>ЯБЛОНСЬКИЙ Анатолій Миколайович</option>
-<option>КОВАЛЬ Роман Станіславович</option>
-<option>МЕЛЬНИК Сергій Вікторович</option>
-<option>КОСТЕНЮК Дмитро Іванович</option>
-<option>ЖЕРНІК Дмитро Миколайович</option>
-<option>КАРБУНАР Денис Васильович</option>
-<option>БАРАНОВ Андрій Васильович</option>
-<option>РИБЧЕНКО Олександр Володимирович</option>
-<option>ЗЕЛЕНКОВ Юрій Володимирович</option>
-<option>ГАВРИЛЮК Олександр Васильович</option>
-<option>КАЛЕНЮК Олексій Іванович</option>
-<option>ШУЛЬГІН Володимир Анатолійович</option>
-<option>ТОКАРЧУК Дмитро Яношевич</option>
-<option>КОМЕНДАТ Тарас Сергійович</option>
-<option>ТРОЯНОВСЬКИЙ Володимир Миколайович</option>
-<option>ГЛАДКИЙ Вадим Миколайович</option>
-<option>ЗАЗУБЕК Андрій Васильович</option>
-<option>НОРІЦА Ігор Штефанович</option>
-<option>ВІВЧАРУК Володимир Омелянович</option>
-<option>СТОШ Артур Павлович</option>
-<option>ВЕЛИКИЙ-ЗНАЧКО Олексій Сергійович</option>
-<option>КАПУСТЯК Максим Григорович</option>
-<option>КОТЛАР Євгеній Іванович</option>
 
 </select>
 
@@ -173,7 +105,7 @@ target="hiddenFrame">
 
 function sendLocation(){
 
-let name = document.getElementById("name").value
+let name=document.getElementById("name").value
 
 if(name==""){
 alert("Оберіть ПІБ")
@@ -182,33 +114,20 @@ return
 
 navigator.geolocation.getCurrentPosition(function(pos){
 
-let lat = pos.coords.latitude
-let lon = pos.coords.longitude
-
-document.getElementById("lat").value = lat
-document.getElementById("lon").value = lon
-
-let now = new Date().toLocaleString()
-
-document.getElementById("time").value = now
+document.getElementById("lat").value=pos.coords.latitude
+document.getElementById("lon").value=pos.coords.longitude
+document.getElementById("time").value=new Date().toLocaleString()
 
 document.getElementById("locationForm").submit()
 
-showToast()
-
-})
-
-}
-
-function showToast(){
-
 let toast=document.getElementById("toast")
-
 toast.className="show"
 
 setTimeout(function(){
-toast.className=toast.className.replace("show","")
+toast.className=""
 },3000)
+
+})
 
 }
 

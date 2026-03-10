@@ -69,12 +69,7 @@ visibility:visible;
 
 <h2>Відправити геолокацію</h2>
 
-<form id="locationForm"
-action="https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse"
-method="POST"
-target="hiddenFrame">
-
-<select name="entry.498498954" id="name">
+<select id="name">
 
 <option value="">Оберіть ПІБ</option>
 
@@ -85,17 +80,9 @@ target="hiddenFrame">
 
 </select>
 
-<input type="hidden" name="entry.744814946" id="lat">
-<input type="hidden" name="entry.658629472" id="lon">
-<input type="hidden" name="entry.1024492850" id="time">
-
-<button type="button" onclick="sendLocation()">
+<button onclick="sendLocation()">
 📍 Відправити геолокацію
 </button>
-
-</form>
-
-<iframe name="hiddenFrame" style="display:none;"></iframe>
 
 </div>
 
@@ -114,20 +101,40 @@ return
 
 navigator.geolocation.getCurrentPosition(function(pos){
 
-document.getElementById("lat").value=pos.coords.latitude
-document.getElementById("lon").value=pos.coords.longitude
-document.getElementById("time").value=new Date().toLocaleString()
+let lat=pos.coords.latitude
+let lon=pos.coords.longitude
+let time=new Date().toLocaleString()
 
-document.getElementById("locationForm").submit()
+let data=new URLSearchParams()
+
+data.append("entry.498498954",name)
+data.append("entry.744814946",lat)
+data.append("entry.658629472",lon)
+data.append("entry.1024492850",time)
+
+fetch("https://docs.google.com/forms/d/e/1FAIpQLSeO24YLALbSq50XDBhjNtzEClEpr4EfWaj8kJKqCsG8EZYxog/formResponse",{
+
+method:"POST",
+mode:"no-cors",
+body:data
+
+})
+
+showToast()
+
+})
+
+}
+
+function showToast(){
 
 let toast=document.getElementById("toast")
+
 toast.className="show"
 
 setTimeout(function(){
 toast.className=""
 },3000)
-
-})
 
 }
 

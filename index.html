@@ -10,39 +10,41 @@
 body{
 font-family:Arial;
 background:#f2f6fb;
-text-align:center;
-padding-top:80px;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
 .card{
 background:white;
-width:340px;
-margin:auto;
 padding:40px;
+width:380px;
 border-radius:14px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+text-align:center;
 }
 
-h2{
-margin-bottom:20px;
+select,button{
+width:100%;
+padding:14px;
+margin-top:15px;
+font-size:16px;
+border-radius:8px;
 }
 
 button{
 background:#2f7cff;
-border:none;
 color:white;
-font-size:20px;
-padding:16px 28px;
-border-radius:8px;
+border:none;
 cursor:pointer;
-transition:0.2s;
 }
 
 button:hover{
-background:#1e63d6;
+background:#1d63d6;
 }
 
-.coords{
+.status{
 margin-top:20px;
 font-size:14px;
 color:#555;
@@ -56,51 +58,126 @@ color:#555;
 
 <div class="card">
 
-<h2>Надіслати геолокацію</h2>
+<h2>Відправити геолокацію</h2>
 
 <form id="locationForm"
 action="https://docs.google.com/forms/d/e/FORM_ID/formResponse"
 method="POST"
 target="hiddenFrame">
 
-<input type="hidden" name="entry.111111111" id="lat">
-<input type="hidden" name="entry.222222222" id="lon">
+<select name="entry.NAME_ID" id="name">
+
+<option value="">Оберіть ПІБ</option>
+
+<option>ГОРЮК Віктор Дмитрович</option>
+<option>ПЕТРАШИШЕН Богдан Євгенійович</option>
+<option>ОГРЕБЧУК Сергій Георгійович</option>
+<option>ДМИТРИШИН Орест Володимирович</option>
+<option>ГЛИВКА Андрій Ярославович</option>
+<option>ПОРУТЧИК Дмитро Миколайович</option>
+<option>ЗВОНЕЦЬКИЙ Ілля Іванович</option>
+<option>НІКІТА Андрій Васильович</option>
+<option>ПІТИК Степан Тарасович</option>
+<option>ПЛЕШКО Ілля Миколайович</option>
+<option>КОСТЮК Дмитро Валерійович</option>
+<option>ХУДОЯРОВ Іван Мадіярович</option>
+<option>САВЮК Андрій Іванович</option>
+<option>ДОНСЬКОЙ Андрій Сергійович</option>
+<option>ТКАЧУК Віктор Вікторович</option>
+<option>ЛИПНЮК Валерій Васильович</option>
+<option>НЯГУ Анатолій Іванович</option>
+<option>ЛЯХОМСЬКИЙ Іван Володимирович</option>
+<option>МУНТЯН Степан Васильович</option>
+<option>СЛИВКА Андрій Васильович</option>
+<option>МІСЕВИЧ Ігор Миколайович</option>
+<option>УРСАТІЙ Яким Якимович</option>
+<option>НЕПІТ Микола Петрович</option>
+<option>САКАЛЮК Сергій Васильович</option>
+<option>СИРОТЮК Олексій Миколайович</option>
+<option>МАТВЕЄВ Кирило Іванович</option>
+<option>САВЧУК Ярослав Вікторович</option>
+<option>ЯСИНІВСЬКИЙ Павло Захарович</option>
+<option>МОЙСЮК Дмитро Дмитрович</option>
+<option>ТОМЧУК Павло Павлович</option>
+<option>ГОЛДАЙ Павло Андрійович</option>
+<option>ЧАЛИЙ Василь Романович</option>
+<option>ЯБЛОНСЬКИЙ Анатолій Миколайович</option>
+<option>КОВАЛЬ Роман Станіславович</option>
+<option>МЕЛЬНИК Сергій Вікторович</option>
+<option>КОСТЕНЮК Дмитро Іванович</option>
+<option>ЖЕРНІК Дмитро Миколайович</option>
+<option>КАРБУНАР Денис Васильович</option>
+<option>БАРАНОВ Андрій Васильович</option>
+<option>РИБЧЕНКО Олександр Володимирович</option>
+<option>ЗЕЛЕНКОВ Юрій Володимирович</option>
+<option>ГАВРИЛЮК Олександр Васильович</option>
+<option>КАЛЕНЮК Олексій Іванович</option>
+<option>ШУЛЬГІН Володимир Анатолійович</option>
+<option>ТОКАРЧУК Дмитро Яношевич</option>
+<option>КОМЕНДАТ Тарас Сергійович</option>
+<option>ТРОЯНОВСЬКИЙ Володимир Миколайович</option>
+<option>ГЛАДКИЙ Вадим Миколайович</option>
+<option>ЗАЗУБЕК Андрій Васильович</option>
+<option>НОРІЦА Ігор Штефанович</option>
+<option>ВІВЧАРУК Володимир Омелянович</option>
+<option>СТОШ Артур Павлович</option>
+<option>ВЕЛИКИЙ-ЗНАЧКО Олексій Сергійович</option>
+<option>КАПУСТЯК Максим Григорович</option>
+<option>КОТЛАР Євгеній Іванович</option>
+
+</select>
+
+<input type="hidden" name="entry.LAT_ID" id="lat">
+<input type="hidden" name="entry.LON_ID" id="lon">
+<input type="hidden" name="entry.TIME_ID" id="time">
 
 <button type="button" onclick="sendLocation()">
-📍 Відправити моє місцезнаходження
+📍 Відправити геолокацію
 </button>
 
 </form>
 
-<div class="coords" id="coords"></div>
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
+<div class="status" id="status"></div>
 
 </div>
-
-<iframe name="hiddenFrame" style="display:none;"></iframe>
 
 <script>
 
 function sendLocation(){
 
-if(!navigator.geolocation){
-alert("Геолокація не підтримується");
-return;
+let name = document.getElementById("name").value
+
+if(name==""){
+alert("Оберіть ПІБ")
+return
 }
+
+if(!navigator.geolocation){
+alert("Геолокація не підтримується")
+return
+}
+
+document.getElementById("status").innerHTML="Отримую GPS..."
 
 navigator.geolocation.getCurrentPosition(function(pos){
 
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
+let lat = pos.coords.latitude
+let lon = pos.coords.longitude
 
-document.getElementById("lat").value = lat;
-document.getElementById("lon").value = lon;
+document.getElementById("lat").value = lat
+document.getElementById("lon").value = lon
 
-document.getElementById("coords").innerHTML =
-"Ваші координати: " + lat.toFixed(6) + ", " + lon.toFixed(6);
+let now = new Date().toLocaleString()
 
-document.getElementById("locationForm").submit();
+document.getElementById("time").value = now
 
-});
+document.getElementById("locationForm").submit()
+
+document.getElementById("status").innerHTML="Геолокацію відправлено"
+
+})
 
 }
 

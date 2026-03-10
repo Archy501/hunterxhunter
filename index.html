@@ -9,18 +9,19 @@
 
 body{
 font-family:Arial;
-background:#f4f7fb;
+background:#f2f6fb;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+margin:0;
 }
 
 .card{
 background:white;
 padding:40px;
 width:380px;
-border-radius:12px;
+border-radius:14px;
 box-shadow:0 10px 30px rgba(0,0,0,0.15);
 text-align:center;
 }
@@ -42,6 +43,37 @@ cursor:pointer;
 
 button:hover{
 background:#1d63d6;
+}
+
+#toast{
+visibility:hidden;
+min-width:260px;
+background:#28a745;
+color:white;
+text-align:center;
+border-radius:8px;
+padding:14px;
+position:fixed;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+font-size:16px;
+box-shadow:0 5px 15px rgba(0,0,0,0.25);
+}
+
+#toast.show{
+visibility:visible;
+animation:fadein 0.4s, fadeout 0.4s 2.6s;
+}
+
+@keyframes fadein{
+from{bottom:20px;opacity:0;}
+to{bottom:40px;opacity:1;}
+}
+
+@keyframes fadeout{
+from{bottom:40px;opacity:1;}
+to{bottom:20px;opacity:0;}
 }
 
 </style>
@@ -133,9 +165,9 @@ target="hiddenFrame">
 
 <iframe name="hiddenFrame" style="display:none;"></iframe>
 
-<div id="status"></div>
-
 </div>
+
+<div id="toast">Місцезнаходження відправлено</div>
 
 <script>
 
@@ -162,9 +194,21 @@ document.getElementById("time").value = now
 
 document.getElementById("locationForm").submit()
 
-document.getElementById("status").innerHTML="Геолокацію відправлено"
+showToast()
 
 })
+
+}
+
+function showToast(){
+
+let toast=document.getElementById("toast")
+
+toast.className="show"
+
+setTimeout(function(){
+toast.className=toast.className.replace("show","")
+},3000)
 
 }
 
